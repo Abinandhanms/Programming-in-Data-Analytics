@@ -1,0 +1,26 @@
+
+CREATE TABLE IF NOT EXISTS Average (Company String,ReviwerType String,overall_ratings int,workLifebalance_ratings int,culturevalues_ratings int,carreropportunities_ratings int,benefits_ratings int,seniormangemnet_ratings int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+
+load data local inpath '/usr/local/hadoop/Project/Average.txt' into table Average;
+
+
+
+CREATE TABLE IF NOT EXISTS Hive (SNo int,Company String,ReviwerType String,JobTitle String,overall_ratings int,workLifebalance_ratings int,culturevalues_ratings int,carreropportunities_ratings int,benefits_ratings int,seniormangemnet_ratings int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+
+load data local inpath '/usr/local/hadoop/Project/Hive.txt' into table Hive;
+
+
+
+CREATE TABLE IF NOT EXISTS Avearge_jt (Company String,jobtitle String,overall_ratings int,workLifebalance_ratings int,culturevalues_ratings int,carreropportunities_ratings int,benefits_ratings int,seniormangemnet_ratings int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+
+Insert into TABLE Avearge_jt (select Company,jobtitle,round(AVG(overall_ratings),0),round(AVG(workLifebalance_ratings),0),round(AVG(culturevalues_ratings),0),round(AVG(carreropportunities_ratings),0),round(AVG(benefits_ratings),0),round(AVG(seniormangemnet_ratings),0) from Hive where ReviwerType = "Employee" GROUP BY JobTitle,Company);
+
+CREATE TABLE IF NOT EXISTS Sentiment (SNo int,SentimenTypeType String) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',';
+
+load data local inpath '/usr/local/hadoop/Project/Final.txt' into table Sentiment;
+
+CREATE TABLE IF NOT EXISTS Employee (SNo int,Company String,ReviwerType String,jobtitle String,sentimentypetype String,overall_ratings int,workLifebalance_ratings int,culturevalues_ratings int,carreropportunities_ratings int,benefits_ratings int,seniormangemnet_ratings int) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+
+Insert into TABLE Employee (select h.sno,h.company,h.reviwertype,h.jobtitle,s.sentimentypetype,h.overall_ratings,h.worklifebalance_ratings,h.culturevalues_ratings,h.carreropportunities_ratings,h.benefits_ratings,h.seniormangemnet_ratings FROM  hive h JOIN sentiment s ON(h.sno = s.sno));

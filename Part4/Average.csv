@@ -1,0 +1,13 @@
+﻿Company,ReviwerType,overall_ratings,workLifebalance_ratings,culturevalues_ratings,carreropportunities_ratings,benefits_ratings,seniormangemnet_ratings
+microsoft,Employee,4,4,4,4,4,3
+facebook,Employee,5,4,5,4,5,4
+netflix,Employee,4,4,4,3,4,4
+microsoft,Alumni,4,3,4,4,4,3
+google,Employee,4,4,4,4,4,4
+amazon,Employee,4,3,4,4,4,3
+facebook,Alumni,4,3,4,4,4,4
+apple,Employee,4,3,4,4,4,4
+netflix,Alumni,3,3,3,3,4,3
+google,Alumni,4,4,4,4,4,4
+amazon,Alumni,3,3,3,3,4,3
+apple,Alumni,4,3,4,3,4,3

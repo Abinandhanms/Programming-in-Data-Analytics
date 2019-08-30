@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS Data (
+    SNo INT ,
+    Comments VARCHAR(20000)
+);
+
+Alter Table Data MODIFY SNo INTEGER PRIMARY KEY;
+
+
+mysql -uhduser -p --local_infile=1 Test -e "LOAD DATA LOCAL INFILE '/home/hduser/Reviews.txt' INTO TABLE Data FIELDS TERMINATED BY ',' IGNORE 1 LINES"
+
+
+
+#loading data from mysql to pig and HDFS
+
+sqoop import --connect jdbc:mysql://127.0.0.1/Project --username hduser --P --table Data  --target-dir /sqoop/HDFS
+

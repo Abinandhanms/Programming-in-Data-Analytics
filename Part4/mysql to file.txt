@@ -1,0 +1,49 @@
+CREATE TABLE IF NOT EXISTS Average (
+Company VARCHAR(255),
+ReviwerType VARCHAR(255),
+overall_ratings INT,
+workLifebalance_ratings INT,
+culturevalues_ratings INT,
+carreropportunities_ratings INT,
+benefits_ratings INT,
+seniormangemnet_ratings INT);
+
+
+sqoop export --connect jdbc:mysql://127.0.0.1/Final  --username hduser  --P  --table Average --export-dir /user/hive/warehouse/project.db/average
+
+
+CREATE TABLE IF NOT EXISTS AverageBYJT (
+Company VARCHAR(255),
+jobtitle VARCHAR(2000),
+overall_ratings VARCHAR(255),
+workLifebalance_ratings VARCHAR(255),
+culturevalues_ratings VARCHAR(255),
+carreropportunities_ratings VARCHAR(255),
+benefits_ratings VARCHAR(255),
+seniormangemnet_ratings VARCHAR(255));
+
+
+
+sqoop export --connect jdbc:mysql://127.0.0.1/Final  --username hduser  --P  --table AverageBYJT --export-dir /user/hive/warehouse/project.db/avearge_jt --input-fields-terminated-by ',' --input-lines-terminated-by '\n'
+
+
+CREATE TABLE IF NOT EXISTS Employee (
+SNo int,
+Company VARCHAR(255),
+reviwertype VARCHAR(255),
+jobtitle VARCHAR(2000),
+sentimentypetype VARCHAR(255),
+overall_ratings VARCHAR(255),
+workLifebalance_ratings VARCHAR(255),
+culturevalues_ratings VARCHAR(255),
+carreropportunities_ratings VARCHAR(255),
+benefits_ratings VARCHAR(255),
+seniormangemnet_ratings VARCHAR(255));
+
+sqoop export --connect jdbc:mysql://127.0.0.1/Final  --username hduser  --P  --table Employee --export-dir /user/hive/warehouse/project.db/employee --input-fields-terminated-by ',' --input-lines-terminated-by '\n'
+
+
+#export data from mysql
+SELECT * FROM Average INTO OUTFILE '/var/lib/mysql-files/Final/Average.txt' FIELDS TERMINATED BY ',' ENCLOSED BY ',' LINES TERMINATED BY '\n';
+SELECT * FROM AverageBYJT INTO OUTFILE '/var/lib/mysql-files/Final/AverageBYJT.txt' FIELDS TERMINATED BY ',' ENCLOSED BY ',' LINES TERMINATED BY '\n';
+SELECT * FROM Employee INTO OUTFILE '/var/lib/mysql-files/Final/EMPLOYEE.txt' FIELDS TERMINATED BY ',' ENCLOSED BY ',' LINES TERMINATED BY '\n';
